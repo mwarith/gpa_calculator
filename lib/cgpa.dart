@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'cgpa.dart';
+import 'gpa.dart';
 
-class Gpa extends StatefulWidget {
-  const Gpa({super.key});
+class Cgpa extends StatefulWidget {
+  const Cgpa({super.key});
 
   @override
-  State<Gpa> createState() => _GpaState();
+  State<Cgpa> createState() => _CgpaState();
 }
 
-class _GpaState extends State<Gpa> {
+class _CgpaState extends State<Cgpa> {
   int selectedIndex = 0, registeredSubjects = 0;
   String? subjectName;
   int? creditHours;
@@ -16,10 +16,6 @@ class _GpaState extends State<Gpa> {
   var creditsController = TextEditingController();
   var gradeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  List<Widget> pages = [
-    const Gpa(),
-    const Cgpa(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class _GpaState extends State<Gpa> {
         backgroundColor: const Color(0XFF546f7a),
         centerTitle: true,
         title: const Text(
-          'GPA Calculator',
+          'CGPA Calculator',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30,
@@ -49,12 +45,11 @@ class _GpaState extends State<Gpa> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  (selectedIndex == 1 ? const Cgpa() : const Gpa()),
+              builder: (context) => (selectedIndex == 1 ? Cgpa() : Gpa()),
             ),
           );
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
             label: 'GPA',
             icon: Icon(
@@ -64,7 +59,7 @@ class _GpaState extends State<Gpa> {
           BottomNavigationBarItem(
             label: 'CGPA',
             icon: Icon(
-              Icons.access_time,
+              Icons.ac_unit,
             ),
           ),
         ],
@@ -74,26 +69,6 @@ class _GpaState extends State<Gpa> {
         child: ListView(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           children: [
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: subjectNameController,
-              keyboardType: TextInputType.name,
-              onFieldSubmitted: (value) {},
-              onChanged: (value) {},
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Subject Name must not be empty';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                labelText: 'Subject Name',
-                prefixIcon: Icon(Icons.book),
-                border: OutlineInputBorder(),
-              ),
-            ),
             SizedBox(
               height: 20,
             ),
@@ -113,15 +88,12 @@ class _GpaState extends State<Gpa> {
                 ),
                 DropdownMenu(
                   dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 4.0, label: "A+"),
-                    DropdownMenuEntry(value: 3.7, label: "A"),
-                    DropdownMenuEntry(value: 3.3, label: "B+"),
-                    DropdownMenuEntry(value: 3.0, label: "B"),
-                    DropdownMenuEntry(value: 2.7, label: "C+"),
-                    DropdownMenuEntry(value: 2.4, label: "C"),
-                    DropdownMenuEntry(value: 2.2, label: "D+"),
-                    DropdownMenuEntry(value: 2.0, label: "D"),
-                    DropdownMenuEntry(value: 0.0, label: "F"),
+                    DropdownMenuEntry(value: 4.0, label: "Excellent"),
+                    DropdownMenuEntry(value: 3.7, label: "Very Good"),
+                    DropdownMenuEntry(value: 3.3, label: "Good"),
+                    DropdownMenuEntry(value: 3.0, label: "Pass"),
+                    DropdownMenuEntry(value: 2.7, label: "Weak"),
+                    DropdownMenuEntry(value: 2.4, label: "Very Weak"),
                   ],
                   hintText: 'Grade',
                   controller: gradeController,

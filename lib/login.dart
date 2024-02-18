@@ -10,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var userName = TextEditingController();
-  var AgeController = TextEditingController();
+  var ageController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
 
@@ -65,14 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 10,
               ),
               TextFormField(
-                controller: AgeController,
+                controller: ageController,
                 keyboardType: TextInputType.number,
-                onFieldSubmitted: (String value) {
-                  //  print(value);
-                },
-                onChanged: (String value) {
-                  //  print(value);
-                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Age must not be empty';
@@ -101,8 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const Gpa(), //must be edited
+                          builder: (context) => Gpa(),
                         ),
                       );
                     }
