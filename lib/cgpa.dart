@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'Results.dart';
 import 'gpa.dart';
+import 'myCard.dart';
 
 class Cgpa extends StatefulWidget {
   const Cgpa({super.key});
@@ -10,12 +12,49 @@ class Cgpa extends StatefulWidget {
 
 class _CgpaState extends State<Cgpa> {
   int selectedIndex = 0, registeredSubjects = 0;
-  String? subjectName;
-  int? creditHours;
-  var subjectNameController = TextEditingController();
-  var creditsController = TextEditingController();
-  var gradeController = TextEditingController();
+  final List<MyCard> cards = [];
+
+  String semester = "";
+  double gpa = 0;
+  var semesterController = TextEditingController();
+  var semesterGpaControl = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
+  void addCard() {
+    if (gpa != 0 && semester.isNotEmpty) {
+      setState(() {
+        cards.add(MyCard(
+          subjectName: semester,
+          creditHours: 0,
+          grade: gpa.toString(),
+        ));
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: const Color(0XFF88b4c6),
+            title: const Text(
+              "All fields are required",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +88,7 @@ class _CgpaState extends State<Cgpa> {
             ),
           );
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             label: 'GPA',
             icon: Icon(
@@ -69,39 +108,59 @@ class _CgpaState extends State<Cgpa> {
         child: ListView(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownMenu(
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 1.0, label: "1"),
-                    DropdownMenuEntry(value: 2.0, label: "2"),
-                    DropdownMenuEntry(value: 3.0, label: "3"),
-                    DropdownMenuEntry(value: 4.0, label: "4"),
-                    DropdownMenuEntry(value: 5.0, label: "5"),
-                  ],
-                  hintText: 'Credits',
-                  controller: creditsController,
-                ),
-                DropdownMenu(
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 4.0, label: "Excellent"),
-                    DropdownMenuEntry(value: 3.7, label: "Very Good"),
-                    DropdownMenuEntry(value: 3.3, label: "Good"),
-                    DropdownMenuEntry(value: 3.0, label: "Pass"),
-                    DropdownMenuEntry(value: 2.7, label: "Weak"),
-                    DropdownMenuEntry(value: 2.4, label: "Very Weak"),
-                  ],
-                  hintText: 'Grade',
-                  controller: gradeController,
-                ),
-              ],
+            TextFormField(
+              controller: semesterController,
+              keyboardType: TextInputType.name,
+              onFieldSubmitted: (value) {
+                semester = value;
+              },
+              onChanged: (value) {
+                semester = value;
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Semester must not be empty';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                labelText: 'Semester',
+                prefixIcon: Icon(Icons.book),
+                border: OutlineInputBorder(),
+              ),
             ),
-            SizedBox(
-              height: 30,
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              controller: semesterGpaControl,
+              keyboardType: TextInputType.number,
+              onFieldSubmitted: (value) {
+                gpa = double.parse(value);
+              },
+              onChanged: (value) {
+                gpa = double.parse(value);
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'GPA must not be empty';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                labelText: 'GPA',
+                prefixIcon: Icon(Icons.book),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Container(
               width: double.infinity,
@@ -112,14 +171,7 @@ class _CgpaState extends State<Cgpa> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Gpa(),
-                      ),
-                    );
-                  }
+                  addCard();
                 },
                 child: const Text(
                   'Add',
@@ -142,11 +194,18 @@ class _CgpaState extends State<Cgpa> {
               ),
               child: MaterialButton(
                 onPressed: () {
+                  double cgpa = 0.0, numOfSemseters = 0;
+                  for (int i = 0; i < cards.length; ++i) {
+                    numOfSemseters++;
+                    cgpa+=double.parse(cards[i].grade);
+                  }
+                  cgpa /= numOfSemseters;
                   if (formKey.currentState!.validate()) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Gpa(),
+                        builder: (context) =>
+                            ShowResults(type: 'CGPA', gpa: cgpa),
                       ),
                     );
                   }
@@ -163,16 +222,7 @@ class _CgpaState extends State<Cgpa> {
             const SizedBox(
               height: 20,
             ),
-            Center(
-              child: Text(
-                "Registered Subjects: $registeredSubjects",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
+            for (int i = 0; i < cards.length; ++i) cards[i]
           ],
         ),
       ),

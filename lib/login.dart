@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'gpa.dart';
 
+String userName = "";
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -9,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var userName = TextEditingController();
+  var userNameControl = TextEditingController();
   var ageController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
@@ -45,10 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 20,
               ),
               TextFormField(
-                controller: userName,
+                controller: userNameControl,
                 keyboardType: TextInputType.name,
-                onFieldSubmitted: (value) {},
-                onChanged: (value) {},
+                onFieldSubmitted: (value) {
+                  userName = value;
+                },
+                onChanged: (value) {
+                  userName = value;
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Username must not be empty';
