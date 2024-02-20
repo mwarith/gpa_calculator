@@ -1,19 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:gpa_calculator/gpa.dart';
 import 'login.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
-  App({super.key});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'GPA Calculator',
       home: Scaffold(

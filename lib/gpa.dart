@@ -50,6 +50,7 @@ class _GpaState extends State<Gpa> {
           creditHours: creditHours,
           grade: grade,
           subjectName: subjectName,
+          hours: true,
         ));
       });
     } else {
@@ -85,7 +86,7 @@ class _GpaState extends State<Gpa> {
       appBar: AppBar(
         backgroundColor: const Color(0XFF546f7a),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'GPA Calculator',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -99,7 +100,7 @@ class _GpaState extends State<Gpa> {
         selectedFontSize: 20,
         unselectedFontSize: 18,
         currentIndex: selectedIndex,
-        backgroundColor: Color(0XFF546f7a),
+        backgroundColor: const Color(0XFF546f7a),
         onTap: (index) {
           setState(() {
             selectedIndex = index;

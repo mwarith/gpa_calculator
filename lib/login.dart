@@ -36,6 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
           key: formKey,
           child: ListView(
             children: [
+              const SizedBox(
+                height: 100,
+              ),
               const Text(
                 'Login',
                 style: TextStyle(
@@ -68,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               TextFormField(
                 controller: ageController,
@@ -86,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Container(
                 width: double.infinity,
@@ -101,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Gpa(),
+                          builder: (context) => const Gpa(),
                         ),
                       );
                     }
@@ -113,9 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
             ],
           ),

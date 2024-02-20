@@ -14,19 +14,21 @@ class _CgpaState extends State<Cgpa> {
   int selectedIndex = 0, registeredSubjects = 0;
   final List<MyCard> cards = [];
 
-  String semester = "";
+  String semester = '', sGpa = '';
   double gpa = 0;
   var semesterController = TextEditingController();
   var semesterGpaControl = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   void addCard() {
-    if (gpa != 0 && semester.isNotEmpty) {
+    if (sGpa.isNotEmpty && semester.isNotEmpty) {
+      gpa = double.parse(sGpa);
       setState(() {
         cards.add(MyCard(
           subjectName: semester,
           creditHours: 0,
           grade: gpa.toString(),
+          hours: false,
         ));
       });
     } else {
@@ -84,7 +86,8 @@ class _CgpaState extends State<Cgpa> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => (selectedIndex == 1 ? Cgpa() : Gpa()),
+              builder: (context) =>
+                  (selectedIndex == 1 ? const Cgpa() : const Gpa()),
             ),
           );
         },
@@ -106,7 +109,7 @@ class _CgpaState extends State<Cgpa> {
       body: Form(
         key: formKey,
         child: ListView(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           children: [
             const SizedBox(
               height: 20,
@@ -139,10 +142,10 @@ class _CgpaState extends State<Cgpa> {
               controller: semesterGpaControl,
               keyboardType: TextInputType.number,
               onFieldSubmitted: (value) {
-                gpa = double.parse(value);
+                sGpa = value;
               },
               onChanged: (value) {
-                gpa = double.parse(value);
+                sGpa = value;
               },
               validator: (value) {
                 if (value!.isEmpty) {
@@ -194,12 +197,12 @@ class _CgpaState extends State<Cgpa> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  double cgpa = 0.0, numOfSemseters = 0;
+                  double cgpa = 0.0, numOfSemesters = 0;
                   for (int i = 0; i < cards.length; ++i) {
-                    numOfSemseters++;
-                    cgpa+=double.parse(cards[i].grade);
+                    numOfSemesters++;
+                    cgpa += double.parse(cards[i].grade);
                   }
-                  cgpa /= numOfSemseters;
+                  cgpa /= numOfSemesters;
                   if (formKey.currentState!.validate()) {
                     Navigator.push(
                       context,

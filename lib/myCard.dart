@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class MyCard extends StatelessWidget {
   final String subjectName, grade;
   final double creditHours;
-
+  final bool hours;
   const MyCard(
       {super.key,
       required this.subjectName,
       required this.grade,
-      required this.creditHours});
+      required this.creditHours,
+      required this.hours});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +31,13 @@ class MyCard extends StatelessWidget {
                 Text(
                   'Grade: $grade',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(
+                if(hours)
+                  Text(
                   'Hours: $creditHours',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

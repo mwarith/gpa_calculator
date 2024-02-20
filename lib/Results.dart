@@ -9,20 +9,49 @@ class ShowResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Your $type is \n${gpa.toStringAsFixed(2)}',
-            style: const TextStyle(
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+      appBar: AppBar(
+        backgroundColor: const Color(0XFF546f7a),
+        centerTitle: true,
+        title: const Text(
+          'GPA Calculator',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),
-        ],
+        ),
+      ),
+      body: Center(
+        child: Container(
+          width: 300,
+          height: 600,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+            color: const Color(0XFF546f7a),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: [
+              Text(
+                'Your $type is',
+                style: const TextStyle(
+                  fontSize: 47,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                gpa.toStringAsFixed(2),
+                style: const TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
